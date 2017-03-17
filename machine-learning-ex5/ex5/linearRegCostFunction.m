@@ -14,7 +14,7 @@ m = length(y); % number of training examples
 %
 %               You should set J to the cost and grad to the gradient.
 %
-h_theta = X*theta
+h_theta = X*theta;
 J = sum((h_theta - y).^2) / (2*m) + lambda/(2*m)*sum(theta(2:end).^2);
 
 grad = (X'*(h_theta-y))/m + [0; lambda/m * theta(2:end)];
