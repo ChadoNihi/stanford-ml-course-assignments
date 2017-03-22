@@ -22,13 +22,18 @@ function [C, sigma] = dataset3Params(X, y, Xval, yval)
 Cs = [0.01 0.03 0.1 0.3 1 3 10 30];
 sigmas = [0.01 0.03 0.1 0.3 1 3 10 30];
 
-for c=1:length(C_vec)
+res = [];
+for c=1:length(Cs)
   for s=1:length(sigmas)
+    model = svmTrain(X, y, Cs(c), @(x1, x2) gaussianKernel(x1, x2, sigmas(s)));
     predictions = svmPredict(model, Xval);
+    res = [res; mean(double(predictions ~= yval)) Cs(c) sigmas(s)];
   end
 end
 
-
+best = sortrows(res)(1,:);
+C = best(2);
+sigma = best(3);
 
 
 
